@@ -1,8 +1,6 @@
 # Google Maps Wrapper
 
-This project aims to improve the usability of google maps. Make it easier to use.
-
-The idea is to wrap some of the google maps functionality in easy-to-use functions:
+This project aims to improve the usability of google maps. Make it easier to use. The idea is to wrap some of the google maps functionality in easy-to-use functions.
 
 # Tested functionality
 
