@@ -7,3 +7,4 @@ This project aims to improve the usability of google maps. Make it easier to use
 Now, we are able to create an array of markers and print them out on screen from an array of objects.
 Some parsing of the array of objects might be necessary to adapt it to the gmaps library requirements.
 For instance, every object must have a position property which depicts the position of the marker.
+We also show the infoBox when clicking on a marker and show lines between a selected marker and the rest of the array.

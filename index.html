@@ -24,6 +24,17 @@
     <script src="js/conf.js"></script>
     <script src="js/gMap.js"></script>
     <script>
+        $(window).ready(function() {
+            // Moustache template style
+            _.templateSettings = {
+                interpolate: /\{\{(.+?)\}\}/g
+            };
+            
+            $('#mapContainer').on(G_MAP.getMarkerEvent('click'), function(ev, marker) {
+                G_MAP.openMarkerInfo(marker);
+            });
+        });
+        
         $(window).load(function () {
             var gmapOpts = {
                 canvasEl: document.getElementById('mapCanvas'),
@@ -32,9 +43,10 @@
                 infoBoxCfg: CONF.map.infoBoxCfg,
                 destinationLinesCfg: CONF.map.destinationLinesCfg
             },
+            template = _.template('<div style="border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;"><h1>{{ name }}</h1><p>Capital: {{ capital }}</p><p>Population: {{ population }}</p></div>'),
             adaptFormat = function(countries) {
                 return _.reduce(countries, function(memo, country) {
-                    return memo.concat({ position: new google.maps.LatLng(country.latlng[0], country.latlng[1]) });
+                    return memo.concat({ all: country, position: new google.maps.LatLng(country.latlng[0], country.latlng[1]), infoBoxHtml: template(country) });
                 }, []);
             };
             
@@ -43,7 +55,8 @@
                 .done(function(countries) {
                     G_MAP
                         .initMap(gmapOpts)
-                        .createMarkersFromArray(adaptFormat(countries));
+                        .createMarkersFromArray(adaptFormat(countries))
+                        .setDestinationLinesFrom(G_MAP.getMarkerByKeyValue({name: 'Spain'}));
                 });
             });
     </script>
