@@ -25,7 +25,7 @@
                 position: obj.position,
                 map: map,
                 infoBoxHtml: obj.infoBoxHtml,
-                all: obj
+                all: obj.all
             });
             addEventsToMarker(marker);
             return memo.concat(marker);
@@ -63,8 +63,8 @@
         return markerEvents[str];
     };
 
-    // google.maps.LatLng
-    G_MAP.setDestinationLines = function (from) {
+    G_MAP.setDestinationLinesFrom = function (marker) {
+        var from = marker.position;
         _.each(markers, function (marker) {
             var to = marker.position;
             if (!from.equals(to)) {
@@ -89,6 +89,12 @@
     G_MAP.setCenterCoords = function (mapsLatLng) {
         getMap().setCenter(mapsLatLng);
         return this;
+    };
+    
+    G_MAP.getMarkerByKeyValue = function (obj) {
+        return _.find(markers, function(marker) {
+            return _.isMatch(marker.all, obj);
+        });
     };
     
     // { canvasEl: htmlObj, $eventListener: jQueryObj, mapCfg: obj, infoBoxCfg: obj, destinationLinesCfg: obj}
